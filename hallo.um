@@ -1,0 +1,4 @@
+scp<hallo> {}
+scp<print> {
+    load<out>=pst
+}
