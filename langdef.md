@@ -58,28 +58,20 @@
 - adds lambdas
 - $lambda can by any scope code
 ## features
-- `?e:($lambda)` runs lambda if last of linevar =  arg register
-- `?l:($lambda)` runs lambda if last of linevar <=  arg register
-- `?L:($lambda)` runs lambda if last of linevar <  arg register
-- `?g:($lambda)` runs lambda if last of linevar =>  arg register
-- `?G:($lambda)` runs lambda if last of linevar >  arg register
-- `!e:($lambda)` runs lambda if not last of linevar =  arg register
-- `!l:($lambda)` runs lambda if not last of linevar <= arg register
-- `!L:($lambda)` runs lambda if not last of linevar <  arg register
-- `!g:($lambda)` runs lambda if not last of linevar => arg register
-- `!G:($lambda)` runs lambda if not last of linevar >  arg register
+- `?e:($lambda)` runs $lambda if last of linevar =  arg register
+- `?l:($lambda)` runs $lambda if last of linevar <=  arg register
+- `?L:($lambda)` runs $lambda if last of linevar <  arg register
+- `?g:($lambda)` runs $lambda if last of linevar =>  arg register
+- `?G:($lambda)` runs $lambda if last of linevar >  arg register
+- `!e:($lambda)` runs $lambda if not last of linevar =  arg register
+- `!l:($lambda)` runs $lambda if not last of linevar <= arg register
+- `!L:($lambda)` runs $lambda if not last of linevar <  arg register
+- `!g:($lambda)` runs $lambda if not last of linevar => arg register
+- `!G:($lambda)` runs $lambda if not last of linevar >  arg register
 # vertion 1.4.1 lambdas variables
 ## consepts
-- adds lambdavars keyed by strings
+- adds lambdavars keyed by  `[a-zA-Z]+`
 - $lambda can also be any lambdavar key
 ## features
-- `?e:($lambda)` runs lambda if last of linevar =  arg register
-- `?l:($lambda)` runs lambda if last of linevar <=  arg register
-- `?L:($lambda)` runs lambda if last of linevar <  arg register
-- `?g:($lambda)` runs lambda if last of linevar =>  arg register
-- `?G:($lambda)` runs lambda if last of linevar >  arg register
-- `!e:($lambda)` runs lambda if not last of linevar =  arg register
-- `!l:($lambda)` runs lambda if not last of linevar <= arg register
-- `!L:($lambda)` runs lambda if not last of linevar <  arg register
-- `!g:($lambda)` runs lambda if not last of linevar => arg register
-- `!G:($lambda)` runs lambda if not last of linevar >  arg register
+- `do:($lambda)` runs $lambda
+- `($name):($lambda)` sets lambdavars $name to $lambda
