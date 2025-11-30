@@ -1,7 +1,7 @@
 # TODO
 - [x] github
-- [ ] add langdef notation file
-- [ ] lang vertion definitions
+- [x] add langdef notation file
+- [x] lang vertion definitions
 - [ ] user input
 - [ ] file io
 - [ ] ??memory ram
