@@ -2,12 +2,13 @@ package com.umbra;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.HashMap;
+import java.util.*;
 
 import com.umbra.UmbraFile.Value;
 
 public class UmbraProject {
     static HashMap<String, UmbraFile> modules = new HashMap<>();
+    static Scanner input = new Scanner(System.in);
 
     public static HashMap<String, Value> projectVar = new HashMap<>();
 

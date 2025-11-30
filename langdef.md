@@ -75,3 +75,17 @@
 ## features
 - `do:($lambda)` runs $lambda
 - `($name):($lambda)` sets lambdavars $name to $lambda
+# vertion 1.5 advanced utils
+## consepts
+- adds some more complex utils
+- adds file io
+- adds escape sequnces [`\n`, `\r`, `\t`, `\f`, `\b`, `\0`] all chars can be replaced with escape sequnces
+## features
+- `<<$string>>` sets arg register to bytes of $string $string: char array
+- `gul` sets arg register to console input
+- `open<$path>` opens file of $path $path: file path
+- `close` writes file buffer to file
+- `frl` reads line arg register from file to linevar
+- `fra` reads intire file to linevar
+- `rwt` writes linevar to file
+- `fap` appends linevar to file

@@ -2,13 +2,14 @@
 - [x] github
 - [x] add langdef notation file
 - [x] lang vertion definitions
-- [ ] user input
-- [ ] file io
+- [x] user input
+- [x] string escape sequneces
+- [x] file io
 - [ ] ??memory ram
 - [ ] ?function (scope call with args)
 - [ ] scope return
 - [ ] lambda call (executing scope with a lambda arg)
-- [ ] file path abeviations
+- [ ] file path abreviations
 - [ ] ??constant vars
 - [ ] string compare
 - [ ] ?nested scopes

@@ -9,6 +9,9 @@ public class UmbraFile {
     int lineindex = 0;
     Value valuearg = null;
 
+    String fileBuffer = ""; 
+    String filePath = ""; 
+
     HashMap<Integer, Value> vars = new HashMap<>();
     HashMap<String, String> lambdas = new HashMap<>();
     ArrayDeque<Integer> loopStackPoint = new ArrayDeque<>();
@@ -63,7 +66,7 @@ public class UmbraFile {
                 valuearg.add((byte)trim(buffer).charAt(0));
                 buffer = "";
             } else if (buffer.matches("<<.*?>>")) {
-                valuearg.add(new Value(trim(buffer,2,2).getBytes()));
+                valuearg = new Value(trim(buffer,2,2).getBytes());
                 buffer = "";
             } else if (buffer.matches("<>")) {
                 valuearg.add(vars.get(lineindex));
@@ -266,7 +269,39 @@ public class UmbraFile {
                 valuearg = new Value();
                 buffer = "";
             } else if (buffer.matches("pst")) {
-                System.out.println(new String(vars.get(lineindex).getChar()));
+                System.out.print(new String(vars.get(lineindex).getChar()));
+                buffer = "";
+            } else if (buffer.matches("gul")) {
+                valuearg = new Value(UmbraProject.input.nextLine().getBytes());
+                buffer = "";
+            } else if (buffer.matches("open<.+?>")) {
+                filePath = trim(buffer, 5);
+                try {
+                    fileBuffer = Files.readString(Path.of(filePath));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                buffer = "";
+            } else if (buffer.matches("close")) {
+                try {
+                    Files.deleteIfExists(Path.of(filePath));
+                    Files.writeString(Path.of(filePath), fileBuffer);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                buffer = "";
+            } else if (buffer.matches("frl")) {
+                vars.put(lineindex, new Value(fileBuffer.split("\\n")[valuearg.get(0)].getBytes()));
+                valuearg = new Value();
+                buffer = "";
+            } else if (buffer.matches("fra")) {
+                vars.put(lineindex, new Value(fileBuffer.getBytes()));
+                buffer = "";
+            } else if (buffer.matches("fwt")) {
+                fileBuffer = new String(vars.get(lineindex).getChar());
+                buffer = "";
+            } else if (buffer.matches("fap")) {
+                fileBuffer += new String(vars.get(lineindex).getChar());
                 buffer = "";
             } else if (buffer.matches("load<.+?>")) {
                 valuearg = UmbraProject.projectVar.get(trim(buffer, 5));
