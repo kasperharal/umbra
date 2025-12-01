@@ -89,3 +89,12 @@
 - `fra` reads intire file to linevar
 - `rwt` writes linevar to file
 - `fap` appends linevar to file
+# vertion 1.6 functions
+## consepts
+- adds consts values that can only be set once
+- adds scope exectuion with return and arg
+- to get const just type const name to put it into arg register
+## features
+- `const<$name>` makes a constant with name $name $name: any uppercase sting
+- `call<$scope>` executes $scope with linevar in ARG const $scope: any scope
+- `ret` returns from call with linevar into arg register

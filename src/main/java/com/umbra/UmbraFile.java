@@ -19,7 +19,9 @@ public class UmbraFile {
 
     HashMap<String, Value> fileVar = new HashMap<>();
 
+    HashMap<String, Value> consts = new HashMap<>();
     HashMap<String, Scope> scopes = new HashMap<>();
+
 
     public UmbraFile(String name, Path File) throws IOException {
         code = Files.readString(File).split("(#.*\n|\n)");
@@ -48,13 +50,26 @@ public class UmbraFile {
         //System.out.println(scope);
         //scopes.forEach((k,v)->System.out.println(k+":"+v));
         for (lineindex = scopes.get(scope).start; lineindex < scopes.get(scope).end; lineindex++) {
-            runCode(code[lineindex].trim());
+            if (runCode(code[lineindex].trim())) {
+                break;
+            }
         }
     }
 
+    public Value runScope(String scope, Value value) {
+        consts.put("ARG", value);
+        Value retVal = new Value();
+        for (lineindex = scopes.get(scope).start; lineindex < scopes.get(scope).end; lineindex++) {
+            if (runCode(code[lineindex].trim())) {
+                retVal = vars.get(lineindex);
+                break;
+            }
+        }
+        consts.remove("ARG");
+        return retVal;
+    }
 
-
-    public void runCode(String line) {
+    public boolean runCode(String line) {
         valuearg = new Value();
         String buffer = "";
         for (int index = 0; index < line.length(); index++) {
@@ -65,7 +80,21 @@ public class UmbraFile {
             } else if (buffer.matches("<.>")) {
                 valuearg.add((byte)trim(buffer).charAt(0));
                 buffer = "";
+            } else if (buffer.matches("<\\\\[nrtfb0]>")) {
+                if (trim(buffer).equals("\\n")) valuearg.add((byte)'\n');
+                else if (trim(buffer).equals("\\r")) valuearg.add((byte)'\r');
+                else if (trim(buffer).equals("\\t")) valuearg.add((byte)'\t');
+                else if (trim(buffer).equals("\\f")) valuearg.add((byte)'\f');
+                else if (trim(buffer).equals("\\b")) valuearg.add((byte)'\b');
+                else if (trim(buffer).equals("\\0")) valuearg.add((byte)'\0');
+                buffer = "";
             } else if (buffer.matches("<<.*?>>")) {
+                buffer = buffer.replace("\\n", "\n");
+                buffer = buffer.replace("\\r", "\r");
+                buffer = buffer.replace("\\t", "\t");
+                buffer = buffer.replace("\\f", "\f");
+                buffer = buffer.replace("\\b", "\b");
+                buffer = buffer.replace("\\0", "\0");
                 valuearg = new Value(trim(buffer,2,2).getBytes());
                 buffer = "";
             } else if (buffer.matches("<>")) {
@@ -256,6 +285,9 @@ public class UmbraFile {
             } else if (buffer.matches("\\([a-zA-Z]+\\):\\(.*?\\)")) {
                 lambdas.put(buffer.substring(1, buffer.indexOf(')')), getLambda(buffer));
                 buffer = "";
+            } else if (consts.containsKey(buffer)) {
+                valuearg = consts.get(buffer);
+                buffer = "";
             } else if (buffer.matches("prt")) {
                 if (!vars.get(lineindex).isEmpty()) {
                     if (valuearg.isEmpty()) {
@@ -273,6 +305,11 @@ public class UmbraFile {
                 buffer = "";
             } else if (buffer.matches("gul")) {
                 valuearg = new Value(UmbraProject.input.nextLine().getBytes());
+                buffer = "";
+            } else if (buffer.matches("const<[A-Z]+>")) {
+                if (!consts.containsKey(trim(buffer, 6))) {
+                    consts.put(trim(buffer, 6), vars.get(lineindex));
+                }
                 buffer = "";
             } else if (buffer.matches("open<.+?>")) {
                 filePath = trim(buffer, 5);
@@ -317,8 +354,19 @@ public class UmbraFile {
                     runScope(arg);
                 }
                 buffer = "";
+            } else if (buffer.matches("call<.+?>")) {
+                String arg = trim(buffer, 5);
+                if (arg.contains(".")) {
+                    valuearg = UmbraProject.modules.get(arg.substring(0, arg.indexOf('.'))).runScope(arg.substring(arg.indexOf('.')+1), vars.get(lineindex));
+                } else {
+                    valuearg = runScope(arg, vars.get(lineindex));
+                }
+                buffer = "";
+            } else if (buffer.matches("ret")) {
+                return true;
             }
         }
+        return false;
     }
 
     public String trim(String in) {

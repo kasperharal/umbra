@@ -6,11 +6,11 @@
 - [x] string escape sequneces
 - [x] file io
 - [ ] ??memory ram
-- [ ] ?function (scope call with args)
-- [ ] scope return
+- [x] function (scope call with args)
+- [x] scope return
 - [ ] lambda call (executing scope with a lambda arg)
 - [ ] file path abreviations
-- [ ] ??constant vars
+- [x] constant vars
 - [ ] string compare
 - [ ] ?nested scopes
 - [ ] turtorial umbra project

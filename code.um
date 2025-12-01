@@ -1,5 +1,4 @@
 imp<hallo.um>
 scp<code> {
-    <<Hallo World!\n>>=save<out>
-    esp<hallo.print>
+    call<hallo.print>=pst
 }
