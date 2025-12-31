@@ -1,5 +1,4 @@
-imp</hallo.um>
+imp<#system.um>
 scp<code> {
-    (print):(call<hallo.print>=pst)
-    do:(print)
+    call<system.system>=pst
 }
