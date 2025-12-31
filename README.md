@@ -5,10 +5,11 @@
 - [ ] ??memory ram
 - [x] function (scope call with args)
 - [x] scope return
-- [ ] lambda call (executing scope with a lambda arg)
+- [/] lambda call (executing scope with a lambda arg)
 - [x] file path abreviations
 - [ ] ??constant vars
-- [ ] lambda byte array casting
+- [x] lambda byte array casting
+- [ ] better value indexing and parsing
 - [ ] string functions
 - [ ] ?nested scopes
 - [ ] turtorial umbra project

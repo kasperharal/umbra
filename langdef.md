@@ -58,16 +58,17 @@
 - adds lambdas
 - $lambda can run any scope code
 ## features
-- `?e:($lambda)` runs $lambda if last of linevar =  arg register
-- `?l:($lambda)` runs $lambda if last of linevar <=  arg register
-- `?L:($lambda)` runs $lambda if last of linevar <  arg register
-- `?g:($lambda)` runs $lambda if last of linevar =>  arg register
-- `?G:($lambda)` runs $lambda if last of linevar >  arg register
-- `!e:($lambda)` runs $lambda if not last of linevar =  arg register
-- `!l:($lambda)` runs $lambda if not last of linevar <= arg register
-- `!L:($lambda)` runs $lambda if not last of linevar <  arg register
-- `!g:($lambda)` runs $lambda if not last of linevar => arg register
-- `!G:($lambda)` runs $lambda if not last of linevar >  arg register
+- `:($lambda)` creates naw lambda
+- `?e:$lambda` runs $lambda if last of linevar =  arg register
+- `?l:$lambda` runs $lambda if last of linevar <=  arg register
+- `?L:$lambda` runs $lambda if last of linevar <  arg register
+- `?g:$lambda` runs $lambda if last of linevar =>  arg register
+- `?G:$lambda` runs $lambda if last of linevar >  arg register
+- `!e:$lambda` runs $lambda if not last of linevar =  arg register
+- `!l:$lambda` runs $lambda if not last of linevar <= arg register
+- `!L:$lambda` runs $lambda if not last of linevar <  arg register
+- `!g:$lambda` runs $lambda if not last of linevar => arg register
+- `!G:$lambda` runs $lambda if not last of linevar >  arg register
 # version 1.4.1 lambdas variables
 ## concepts
 - adds lambdavars keyed by  `[a-zA-Z]+`
@@ -93,13 +94,14 @@
 ## concepts
 - adds scope exectuion with return and arg
 ## features
-- `call<$scope>` executes $scope with linevar in ARG const $scope: any scope
+- `call<$scope>` executes $scope with linevar as arg $scope: any scope
 - `A=` gets arg value
 - `ret` returns from call with linevar into arg register
-# version 1.7 data handeling and serialization
+# version 1.7 importing and casting
 - adds import filepath utils
 - adds casting from and to lambda
 ## features
 - `imp</$filepath>` imports $filepath at project root $filepath: any path relative to project root
 - `imp<@$filepath>` imports $filepath from gitlib $filepath: any path from gitlib
-- `cast<$lambda>` 
+- `cast:$lambda` if $lambda exist then cast $lambda as string into byte array  
+else cast linevar as string into lambdavar with key $lambda

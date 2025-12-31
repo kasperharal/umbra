@@ -28,7 +28,7 @@ public class UmbraFile {
     }
 
     public UmbraFile(String name, String File) throws IOException {
-        code = File.split("( #.*\n|\n)");
+        code = File.split("(\\s#.*\n|\n)");
         String scope = "";
         Integer scopebegin = null;
         for (lineindex = 0; lineindex < code.length; lineindex++) {
@@ -134,7 +134,7 @@ public class UmbraFile {
                 valuearg = new Value();
                 buffer = "";
             } else if (buffer.matches("/[a-z]+/")) {
-                valuearg.add(fileVar.get(trim(buffer)));
+                valuearg = fileVar.get(trim(buffer));
                 buffer = "";
             } else if (buffer.matches("\\\\[a-z]+\\\\")) {
                 fileVar.put(trim(buffer), vars.get(lineindex));
@@ -374,8 +374,14 @@ public class UmbraFile {
                 buffer = "";
             } else if (buffer.matches("ret")) {
                 return true;
-            } else if (buffer.matches("cast<.+?>")) {
-                
+            } else if (buffer.matches("cast:.*?\\)")) {
+                if (buffer.matches("cast:\\(.*?\\)")) valuearg = new Value(getLambda(buffer).getBytes());
+                else if (lambdas.containsKey(buffer.substring(buffer.indexOf(":")+1, buffer.lastIndexOf(')')+1))) {
+                    valuearg = new Value(getLambda(buffer).getBytes());
+                } else {
+                    lambdas.put(buffer.substring(buffer.indexOf(":")+1, buffer.lastIndexOf(')')+1), new String(vars.get(lineindex).getChar()));
+                }
+                buffer = "";
             }
         }
         return false;
@@ -398,7 +404,7 @@ public class UmbraFile {
         if (lambdas.containsKey(out)) {
             return lambdas.get(out);
         }
-        out = out.substring(1);
+        out = out.substring(1, out.length()-1);
         return out;
     }
 

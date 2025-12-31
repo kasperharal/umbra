@@ -1,5 +1,10 @@
 imp</stdlib/system.um>
 scp<code> {
-    lambda<print>:(call<system.greatings>=pst)
-    do:print()
+    lambda<print>:(pst)
+    cast:print()=call<func>
+}
+
+scp<func> {
+    A=cast:stuf()
+    <<greatings>>=do:stuf()
 }
