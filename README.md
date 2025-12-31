@@ -10,11 +10,11 @@
 - [x] scope return
 - [ ] lambda call (executing scope with a lambda arg)
 - [ ] file path abreviations
-- [x] constant vars
+- [ ] ??constant vars
 - [ ] string compare
 - [ ] ?nested scopes
 - [ ] turtorial umbra project
-- [ ] ?enums
+- [ ] enums
 ## lang goals
 - [ ] utility func stdlib
 - [ ] console pixel screen API

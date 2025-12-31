@@ -8,6 +8,7 @@ public class UmbraFile {
     String[] code;
     int lineindex = 0;
     Value valuearg = null;
+    Value callArg = new Value();
 
     String fileBuffer = ""; 
     String filePath = ""; 
@@ -19,7 +20,6 @@ public class UmbraFile {
 
     HashMap<String, Value> fileVar = new HashMap<>();
 
-    HashMap<String, Value> consts = new HashMap<>();
     HashMap<String, Scope> scopes = new HashMap<>();
 
 
@@ -57,7 +57,7 @@ public class UmbraFile {
     }
 
     public Value runScope(String scope, Value value) {
-        consts.put("ARG", value);
+        callArg = value;
         Value retVal = new Value();
         for (lineindex = scopes.get(scope).start; lineindex < scopes.get(scope).end; lineindex++) {
             if (runCode(code[lineindex].trim())) {
@@ -65,7 +65,7 @@ public class UmbraFile {
                 break;
             }
         }
-        consts.remove("ARG");
+        callArg = new Value();
         return retVal;
     }
 
@@ -113,6 +113,10 @@ public class UmbraFile {
                 buffer = "";
             } else if (buffer.matches("I=")) {
                 vars.get(lineindex).add(loopStack.peek().byteValue());
+                valuearg = new Value();
+                buffer = "";
+            } else if (buffer.matches("A=")) {
+                vars.put(lineindex, callArg);
                 valuearg = new Value();
                 buffer = "";
             } else if (buffer.matches("/[a-z]+/")) {
@@ -285,9 +289,6 @@ public class UmbraFile {
             } else if (buffer.matches("\\([a-zA-Z]+\\):\\(.*?\\)")) {
                 lambdas.put(buffer.substring(1, buffer.indexOf(')')), getLambda(buffer));
                 buffer = "";
-            } else if (consts.containsKey(buffer)) {
-                valuearg = consts.get(buffer);
-                buffer = "";
             } else if (buffer.matches("prt")) {
                 if (!vars.get(lineindex).isEmpty()) {
                     if (valuearg.isEmpty()) {
@@ -305,11 +306,6 @@ public class UmbraFile {
                 buffer = "";
             } else if (buffer.matches("gul")) {
                 valuearg = new Value(UmbraProject.input.nextLine().getBytes());
-                buffer = "";
-            } else if (buffer.matches("const<[A-Z]+>")) {
-                if (!consts.containsKey(trim(buffer, 6))) {
-                    consts.put(trim(buffer, 6), vars.get(lineindex));
-                }
                 buffer = "";
             } else if (buffer.matches("open<.+?>")) {
                 filePath = trim(buffer, 5);

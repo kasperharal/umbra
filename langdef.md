@@ -56,7 +56,7 @@
 # vertion 1.4.0 lambdas
 ## consepts
 - adds lambdas
-- $lambda can by any scope code
+- $lambda can run any scope code
 ## features
 - `?e:($lambda)` runs $lambda if last of linevar =  arg register
 - `?l:($lambda)` runs $lambda if last of linevar <=  arg register
@@ -91,10 +91,8 @@
 - `fap` appends linevar to file
 # vertion 1.6 functions
 ## consepts
-- adds consts values that can only be set once
 - adds scope exectuion with return and arg
-- to get const just type const name to put it into arg register
 ## features
-- `const<$name>` makes a constant with name $name $name: any uppercase sting
 - `call<$scope>` executes $scope with linevar in ARG const $scope: any scope
+- `A=` gets arg value
 - `ret` returns from call with linevar into arg register

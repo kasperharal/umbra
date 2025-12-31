@@ -1,5 +1,4 @@
 scp<hallo> {}
 scp<print> {
-    <<Hallo World!\n>>=const<STR>!=
-    STR=ret
+    <<Hallo World!\n>>=ret
 }
