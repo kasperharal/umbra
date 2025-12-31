@@ -1,5 +1,5 @@
-# vertion 1.0 umbra
-## consepts
+# version 1.0 umbra
+## concepts
 - umbra is a esolang where all lines has its own byte array called linevar
 - all code that is not taged with (not scope code) must be written in a scope
 - umbra has two registers arg register and loop register
@@ -18,22 +18,22 @@
 - `[$code]` loops $code until loop register = arg register at `]` $code: any scope code
 - `prt` prints linevar byte at arg register or linevar byte at 0
 - `pst` prints linevar as string
-# vertion 1.1 file variables
-## consepts
+# version 1.1 file variables
+## concepts
 - adds filevars byte arrays keyed by strings
 ## features
 - `\$varname\` sets filevar $varname to linevar $varname: any string
 - `/$varname/` sets arg register to filevar $varname $varname: any string
-# vertion 1.2 utils
-## consepts
+# version 1.2 utils
+## concepts
 - adds long needed utils
 ## features
 - `|` sets linevar to linevar byte at arg register
-- `<$char>` add $char byte value to arg register $char: any ascii Character
+- `<$char>` add $char byte value to arg register $char: any utf-8 Character
 - `!=` clears linevar
 - `I=` sets linevar to loop register
-# vertion 1.2 conditonals
-## consepts
+# version 1.2 conditonals
+## concepts
 - adds conditonal loops
 ## features
 - `[$code?e]` loops $code until last of linevar =  arg register at `]` $code: any scope code
@@ -46,15 +46,15 @@
 - `[$code!L]` loops $code while last of linevar <  arg register at `]` $code: any scope code
 - `[$code!g]` loops $code while last of linevar => arg register at `]` $code: any scope code
 - `[$code!G]` loops $code while last of linevar >  arg register at `]` $code: any scope code
-# vertion 1.3 global variables
-## consepts
+# version 1.3 global variables
+## concepts
 - adds projectvars byte arrays keyed by strings
 - projectvars can be accesed by all modules
 ## features
 - `load<$varname>` sets projectvar $varname to linevar $varname: any string
 - `save<$varname>` sets arg register to projectvar $varname $varname: any string
-# vertion 1.4.0 lambdas
-## consepts
+# version 1.4.0 lambdas
+## concepts
 - adds lambdas
 - $lambda can run any scope code
 ## features
@@ -68,15 +68,15 @@
 - `!L:($lambda)` runs $lambda if not last of linevar <  arg register
 - `!g:($lambda)` runs $lambda if not last of linevar => arg register
 - `!G:($lambda)` runs $lambda if not last of linevar >  arg register
-# vertion 1.4.1 lambdas variables
-## consepts
+# version 1.4.1 lambdas variables
+## concepts
 - adds lambdavars keyed by  `[a-zA-Z]+`
 - $lambda can also be any lambdavar key
 ## features
 - `do:($lambda)` runs $lambda
 - `($name):($lambda)` sets lambdavars $name to $lambda
-# vertion 1.5 advanced utils
-## consepts
+# version 1.5 advanced utils
+## concepts
 - adds some more complex utils
 - adds file io
 - adds escape sequnces [`\n`, `\r`, `\t`, `\f`, `\b`, `\0`] all chars can be replaced with escape sequnces
@@ -89,10 +89,14 @@
 - `fra` reads intire file to linevar
 - `rwt` writes linevar to file
 - `fap` appends linevar to file
-# vertion 1.6 functions
-## consepts
+# version 1.6 functions
+## concepts
 - adds scope exectuion with return and arg
 ## features
 - `call<$scope>` executes $scope with linevar in ARG const $scope: any scope
 - `A=` gets arg value
 - `ret` returns from call with linevar into arg register
+# version 1.7 data handeling and serialization
+- adds import filepath utils
+## features
+- `imp</$filepath>` imports $filepath at project root $filepath: any path relative to project root

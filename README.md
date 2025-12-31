@@ -6,9 +6,9 @@
 - [x] function (scope call with args)
 - [x] scope return
 - [ ] lambda call (executing scope with a lambda arg)
-- [ ] file path abreviations
+- [x] file path abreviations
 - [ ] ??constant vars
-- [ ] lambda byte array  generlization
+- [ ] lambda byte array casting
 - [ ] string compare
 - [ ] ?nested scopes
 - [ ] turtorial umbra project
