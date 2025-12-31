@@ -1,7 +1,6 @@
 package com.umbra;
 
 import java.io.BufferedInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -35,11 +34,11 @@ public class UmbraProject {
                 name = modulePath.substring(modulePath.lastIndexOf('/')+1);
             }
             name = name.substring(0, name.indexOf('.'));
-
-            if (modulePath.startsWith("#")) {
-                if (name.startsWith("#")) name = name.substring(1);
+            if (modulePath.startsWith("@")) {
+                if (name.startsWith("@")) name = name.substring(1);
                 String gitCode = downloadFile("https://raw.githubusercontent.com/kasperharal/umbra/refs/heads/main/umbra/stdlib/"+modulePath.substring(1));
                 modules.put(name, new UmbraFile(name, gitCode));
+                return;
             }
 
             modules.put(name, new UmbraFile(name, Path.of(modulePath)));

@@ -1,4 +1,0 @@
-scp<hallo> {}
-scp<print> {
-    <<Hallo World!\n>>=ret
-}

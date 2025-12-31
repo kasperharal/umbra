@@ -28,7 +28,7 @@ public class UmbraFile {
     }
 
     public UmbraFile(String name, String File) throws IOException {
-        code = File.split("(#.*\n|\n)");
+        code = File.split("( #.*\n|\n)");
         String scope = "";
         Integer scopebegin = null;
         for (lineindex = 0; lineindex < code.length; lineindex++) {
@@ -84,13 +84,19 @@ public class UmbraFile {
             } else if (buffer.matches("<.>")) {
                 valuearg.add((byte)trim(buffer).charAt(0));
                 buffer = "";
-            } else if (buffer.matches("<\\\\[nrtfb0]>")) {
+            } else if (buffer.matches("<\\\\[\\\\nrtfb0#]>")) {
                 if (trim(buffer).equals("\\n")) valuearg.add((byte)'\n');
                 else if (trim(buffer).equals("\\r")) valuearg.add((byte)'\r');
                 else if (trim(buffer).equals("\\t")) valuearg.add((byte)'\t');
                 else if (trim(buffer).equals("\\f")) valuearg.add((byte)'\f');
                 else if (trim(buffer).equals("\\b")) valuearg.add((byte)'\b');
                 else if (trim(buffer).equals("\\0")) valuearg.add((byte)'\0');
+                else if (trim(buffer).equals("\\#")) valuearg.add((byte)'#');
+                else if (trim(buffer).equals("\\\\")) valuearg.add((byte)'\\');
+                buffer = "";
+            } else if (buffer.matches("<\\\\(ls|gr)\\\\>")) {
+                if (trim(buffer).equals("\\gr\\")) valuearg.add((byte)'>');
+                else if (trim(buffer).equals("\\gr\\")) valuearg.add((byte)'<');
                 buffer = "";
             } else if (buffer.matches("<<.*?>>")) {
                 buffer = buffer.replace("\\n", "\n");
@@ -99,6 +105,10 @@ public class UmbraFile {
                 buffer = buffer.replace("\\f", "\f");
                 buffer = buffer.replace("\\b", "\b");
                 buffer = buffer.replace("\\0", "\0");
+                buffer = buffer.replace("\\#", "#");
+                buffer = buffer.replace("\\\\", "\\");
+                buffer = buffer.replace("\\gr\\", ">");
+                buffer = buffer.replace("\\ls\\", "<");
                 valuearg = new Value(trim(buffer,2,2).getBytes());
                 buffer = "";
             } else if (buffer.matches("<>")) {
@@ -239,7 +249,7 @@ public class UmbraFile {
                 }
                 valuearg = new Value();
                 buffer = "";
-            } else if (buffer.matches("\\?[elLgG]:\\(.*?\\)")) {
+            } else if (buffer.matches("\\?[elLgG]:.*?\\)")) {
                 if (buffer.charAt(1) == 'e') {
                     if (vars.get(lineindex).get(vars.get(lineindex).size()-1) == valuearg.get(0)) {
                         runCode(getLambda(buffer));
@@ -263,7 +273,7 @@ public class UmbraFile {
                 }
                 valuearg = new Value();
                 buffer = "";
-            } else if (buffer.matches("\\![elLgG]:\\(.*?\\)")) {
+            } else if (buffer.matches("\\![elLgG]:.*?\\)")) {
                 if (buffer.charAt(1) == 'e') {
                     if (vars.get(lineindex).get(vars.get(lineindex).size()-1) != valuearg.get(0)) {
                         runCode(getLambda(buffer));
@@ -287,11 +297,11 @@ public class UmbraFile {
                 }
                 valuearg = new Value();
                 buffer = "";
-            } else if (buffer.matches("do:\\(.*?\\)")) {
+            } else if (buffer.matches("do:.*?\\)")) {
                 runCode(getLambda(buffer));
                 buffer = "";
-            } else if (buffer.matches("\\([a-zA-Z]+\\):\\(.*?\\)")) {
-                lambdas.put(buffer.substring(1, buffer.indexOf(')')), getLambda(buffer));
+            } else if (buffer.matches("lambda<[a-zA-Z]+>:\\(.*?\\)")) {
+                lambdas.put(buffer.substring(buffer.indexOf('<')+1, buffer.indexOf('>'))+"()", getLambda(buffer));
                 buffer = "";
             } else if (buffer.matches("prt")) {
                 if (!vars.get(lineindex).isEmpty()) {
@@ -364,6 +374,8 @@ public class UmbraFile {
                 buffer = "";
             } else if (buffer.matches("ret")) {
                 return true;
+            } else if (buffer.matches("cast<.+?>")) {
+                
             }
         }
         return false;
@@ -382,10 +394,11 @@ public class UmbraFile {
     }
 
     public String getLambda(String lambda) {
-        String out = lambda.substring(lambda.indexOf(":(")+2, lambda.lastIndexOf(')'));
+        String out = lambda.substring(lambda.indexOf(":")+1, lambda.lastIndexOf(')')+1);
         if (lambdas.containsKey(out)) {
             return lambdas.get(out);
         }
+        out = out.substring(1);
         return out;
     }
 

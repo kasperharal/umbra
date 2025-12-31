@@ -1,4 +1,5 @@
-imp<#system.um>
+imp</stdlib/system.um>
 scp<code> {
-    call<system.system>=pst
+    lambda<print>:(call<system.greatings>=pst)
+    do:print()
 }

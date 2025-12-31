@@ -73,13 +73,13 @@
 - adds lambdavars keyed by  `[a-zA-Z]+`
 - $lambda can also be any lambdavar key
 ## features
-- `do:($lambda)` runs $lambda
-- `($name):($lambda)` sets lambdavars $name to $lambda
+- `do:$lambda` runs $lambda
+- `lambda<$name()>:$lambda` sets lambdavars $name to $lambda ($name must end with "( )")
 # version 1.5 advanced utils
 ## concepts
 - adds some more complex utils
 - adds file io
-- adds escape sequnces [`\n`, `\r`, `\t`, `\f`, `\b`, `\0`] all chars can be replaced with escape sequnces
+- adds escape sequnces [`\n`, `\r`, `\t`, `\f`, `\b`, `\0`, `\#`, `\\`, `\ls\`, `\gr\`] all chars can be replaced with escape sequnces
 ## features
 - `<<$string>>` sets arg register to bytes of $string $string: char array
 - `gul` sets arg register to console input
@@ -98,5 +98,8 @@
 - `ret` returns from call with linevar into arg register
 # version 1.7 data handeling and serialization
 - adds import filepath utils
+- adds casting from and to lambda
 ## features
 - `imp</$filepath>` imports $filepath at project root $filepath: any path relative to project root
+- `imp<@$filepath>` imports $filepath from gitlib $filepath: any path from gitlib
+- `cast<$lambda>` 

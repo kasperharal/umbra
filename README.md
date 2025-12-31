@@ -9,7 +9,7 @@
 - [x] file path abreviations
 - [ ] ??constant vars
 - [ ] lambda byte array casting
-- [ ] string compare
+- [ ] string functions
 - [ ] ?nested scopes
 - [ ] turtorial umbra project
 - [ ] enums
