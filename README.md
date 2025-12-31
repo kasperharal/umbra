@@ -1,7 +1,4 @@
 # TODO
-- [x] github
-- [x] add langdef notation file
-- [x] lang vertion definitions
 - [x] user input
 - [x] string escape sequneces
 - [x] file io
@@ -11,10 +8,13 @@
 - [ ] lambda call (executing scope with a lambda arg)
 - [ ] file path abreviations
 - [ ] ??constant vars
+- [ ] lambda byte array  generlization
 - [ ] string compare
 - [ ] ?nested scopes
 - [ ] turtorial umbra project
 - [ ] enums
+- [ ] exceptions (throw | try catch)
+- [ ] data types
 ## lang goals
 - [ ] utility func stdlib
 - [ ] console pixel screen API
