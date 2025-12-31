@@ -1,1 +1,3 @@
-scp<system> {}
+scp<system> {
+    <<Hallo World!\n>>=ret
+}

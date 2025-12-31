@@ -29,14 +29,18 @@ public class UmbraProject {
             if (modulePath.startsWith("/")) {
                 modulePath = root + modulePath;
             }
-            if (modulePath.startsWith("#")) {
-                downloadFile("github uri", ""); // TODO
-            }
+
             String name = modulePath;
             if (modulePath.contains("/")) {
                 name = modulePath.substring(modulePath.lastIndexOf('/')+1);
             }
             name = name.substring(0, name.indexOf('.'));
+
+            if (modulePath.startsWith("#")) {
+                if (name.startsWith("#")) name = name.substring(1);
+                String gitCode = downloadFile("https://raw.githubusercontent.com/kasperharal/umbra/refs/heads/main/umbra/stdlib/"+modulePath.substring(1));
+                modules.put(name, new UmbraFile(name, gitCode));
+            }
 
             modules.put(name, new UmbraFile(name, Path.of(modulePath)));
         } catch (IOException e) {
@@ -44,7 +48,7 @@ public class UmbraProject {
         }
     }
 
-    private static void downloadFile(String fileUrl, String savePath) throws IOException {
+    private static String downloadFile(String fileUrl) throws IOException {
         URL url = null;
         try {
             url = new URI(fileUrl).toURL();
@@ -63,19 +67,16 @@ public class UmbraProject {
         if (statusCode != HttpURLConnection.HTTP_OK) {
             throw new IOException("Failed to download file. HTTP code: " + statusCode);
         }
-
+        String output = "";
         // Read file from input stream and save locally
-        try (InputStream in = new BufferedInputStream(connection.getInputStream());
-             FileOutputStream out = new FileOutputStream(savePath)) {
+        try (InputStream in = new BufferedInputStream(connection.getInputStream())) {
 
-            byte[] buffer = new byte[4096];
-            int bytesRead;
-            while ((bytesRead = in.read(buffer)) != -1) {
-                out.write(buffer, 0, bytesRead);
-            }
+            output = new String(in.readAllBytes());
         } finally {
             connection.disconnect();
         }
+
+        return output;
     }
     
 }

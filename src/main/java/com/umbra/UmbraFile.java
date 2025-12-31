@@ -24,7 +24,11 @@ public class UmbraFile {
 
 
     public UmbraFile(String name, Path File) throws IOException {
-        code = Files.readString(File).split("(#.*\n|\n)");
+        this(name, Files.readString(File));
+    }
+
+    public UmbraFile(String name, String File) throws IOException {
+        code = File.split("(#.*\n|\n)");
         String scope = "";
         Integer scopebegin = null;
         for (lineindex = 0; lineindex < code.length; lineindex++) {
